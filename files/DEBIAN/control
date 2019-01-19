@@ -1,0 +1,8 @@
+Origin: IT4smart
+Package: unifi-controller-it4smart
+Version: 1.0.0
+Section: misc
+Priority: required
+Architecture: all
+Maintainer: IT4smart GmbH <support@it4smart.eu>
+Description: unifi controller for ubiquiti devices.
