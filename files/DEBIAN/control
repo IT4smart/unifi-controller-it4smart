@@ -1,6 +1,6 @@
 Origin: IT4smart
 Package: unifi-controller-it4smart
-Version: 1.0.0
+Version: 1.1.0
 Section: misc
 Priority: required
 Architecture: all
