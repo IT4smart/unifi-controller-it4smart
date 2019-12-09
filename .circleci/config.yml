@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build:
+    build-debian-stretch:
         docker:
             - image: it4smart/debian-stretch-cross:v1.0.0
         working_directory: ~/repo
@@ -8,7 +8,7 @@ jobs:
             - checkout
             - run:
                 name: Create changelog
-                command: ./changelog.sh > files/DEBIAN/changelog
+                command: ./changelog.sh unifi-controller-it4smart stretch  > debian/changelog
             - run:
                 name: Build package
                 command: dpkg-buildpackage -us -uc
