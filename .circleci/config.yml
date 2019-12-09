@@ -19,3 +19,9 @@ jobs:
                     ls -l 
             - store_artifacts:
                 path: ~/repo
+
+workflows:
+    version: 2
+    release:
+        jobs:
+            - build-debian-stretch
