@@ -1,0 +1,16 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: it4smart/debian-stretch-cross:v1.0.0
+        working_directory: ~/repo
+        steps:
+            - checkout
+            - run:
+                name: Create changelog
+                command: ./changelog.sh > files/DEBIAN/changelog
+            - run:
+                name: Build package
+                command: dpkg-buildpackage -us -uc
+            - store_artifacts:
+                path: ~/repo
