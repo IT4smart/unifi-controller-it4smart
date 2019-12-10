@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build-debian-stretch:
+    build-debian-stretch-armhf:
         docker:
             - image: it4smart/debian-stretch-cross:v1.0.0
         working_directory: ~/repo
@@ -16,7 +16,7 @@ jobs:
                 command: ./changelog.sh unifi-controller-it4smart stretch  > debian/changelog
             - run:
                 name: Build package
-                command: dpkg-buildpackage -us -uc
+                command: dpkg-buildpackage -us -uc --host-arch armhf
             - run:
                 name: List directory
                 command: |
@@ -29,4 +29,4 @@ workflows:
     version: 2
     release:
         jobs:
-            - build-debian-stretch
+            - build-debian-stretch-armhf
