@@ -22,7 +22,7 @@ jobs:
                     - "77:1e:e6:8b:6f:f5:1c:cc:c9:ca:92:02:1e:4b:c6:5f"
             - run:
                 name: Upload package
-                command: scp $(ls *.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/
+                command: scp $(ls ~/*.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/
             - store_artifacts:
                 path: ~/
 
