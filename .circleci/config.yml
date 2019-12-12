@@ -13,7 +13,7 @@ jobs:
                     wget https://codeload.github.com/IT4smart/unifi-controller-it4smart/tar.gz/${GIT_TAG} -O unifi-controller-it4smart_${GIT_TAG//v}.orig.tar.gz
             - run:
                 name: Create changelog
-                command: ./changelog.sh unifi-controller-it4smart stretch  > debian/changelog
+                command: ./changelog.sh unifi-controller-it4smart stretch deb9 > debian/changelog
             - run:
                 name: Build package
                 command: dpkg-buildpackage -us -uc --host-arch armhf
@@ -22,7 +22,7 @@ jobs:
                     - "77:1e:e6:8b:6f:f5:1c:cc:c9:ca:92:02:1e:4b:c6:5f"
             - run:
                 name: Upload package
-                command: scp -o StrictHostKeyChecking=no $(ls ~/*.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/
+                command: scp -o StrictHostKeyChecking=no $(ls ~/*.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/stretch/
             - store_artifacts:
                 path: ~/
 
