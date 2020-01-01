@@ -68,12 +68,17 @@ jobs:
             - run:
                 name: Build package
                 command: dpkg-buildpackage -us -uc --host-arch armhf
+            - run:
+                name: Save build
+                command: |
+                    mkdir -p ~/build
+                    mv ~/*.deb ~/build/
             - store_artifacts:
                 path: ~/
             - persist_to_workspace:
                 root: ~/
                 paths:
-                    - ~/*.deb
+                    - ~/build/*
     test-debian-stretch-armhf-snapshot:
         machine: true
         working_directory: ~/repo
