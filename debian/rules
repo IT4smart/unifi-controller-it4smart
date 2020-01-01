@@ -2,7 +2,11 @@
 %:
 	dh $@ --with systemd
 
-override_dh_auto_install:
-	dh_auto_install
-	dh_systemd_enable || true
-	dh_systemd_start || true
+override_dh_installinit:
+	dh_installinit --name=unifi
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=unifi
+
+override_dh_systemd_start:
+	dh_systemd_start --name=unifi
