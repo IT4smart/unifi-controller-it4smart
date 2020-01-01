@@ -91,7 +91,7 @@ jobs:
                     wget https://download.qemu.org/qemu-4.2.0.tar.xz
                     tar xvJf qemu-4.2.0.tar.xz
                     cd qemu-4.2.0
-                    ./configure ---target-list=arm-softmmu,aarch64-softmmu
+                    ./configure --target-list=arm-softmmu,aarch64-softmmu
                     make
             - run:
                 name: Download latest raspbian stretch lite
