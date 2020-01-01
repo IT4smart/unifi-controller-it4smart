@@ -1,4 +1,6 @@
 # unifi-controller-it4smart
+[![CircleCI](https://circleci.com/gh/IT4smart/unifi-controller-it4smart/tree/master.svg?style=svg)](https://circleci.com/gh/IT4smart/unifi-controller-it4smart/tree/master)
+
 Current version of unifi controller is: 5.12.35
 
 We use the following docker image: ryansch/unifi-rpi
