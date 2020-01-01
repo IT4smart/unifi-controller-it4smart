@@ -78,7 +78,7 @@ jobs:
             - persist_to_workspace:
                 root: ~/
                 paths:
-                    - ~/build/*
+                    - build/*
     test-debian-stretch-armhf-snapshot:
         machine: true
         working_directory: ~/repo
