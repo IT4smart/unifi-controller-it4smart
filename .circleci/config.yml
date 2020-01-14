@@ -101,16 +101,16 @@ jobs:
                     unzip raspbian-stretch-lite.zip
             - run:
                 name: Convert img to qcow2
-                command: qemu-img convert -f raw -O qcow2 $(ls *.img) raspbian-lite.qcow2
+                command: qemu-4.2.0/qemu-img convert -f raw -O qcow2 $(ls *.img) raspbian-lite.qcow2
             - run:
                 name: Resize raspbian lite image
-                command: qemu-img resize raspbian-lite.qcow2 +1G
+                command: qemu-4.2.0/qemu-img resize raspbian-lite.qcow2 +1G
             - run:
                 name: Check if raspbian lite image is OK
-                command: qemu-img info raspbian-lite.qcow2
+                command: qemu-4.2.0/qemu-img info raspbian-lite.qcow2
             - run:
                 name: Run raspbian lite
-                command: qemu-system-arm -M raspi2 -hda raspbian-lite.zip 
+                command: qemu-4.2.0/arm-softmmu/qemu-system-arm -M raspi2 -hda raspbian-lite.qcow2
 
 workflows:
     version: 2
