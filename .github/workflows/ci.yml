@@ -9,8 +9,6 @@ jobs:
         runs-on: ubuntu-latest
         container: 
             image: it4smart/debian-stretch-cross:v1.1.0
-            volumes:
-                -  .:/data
         steps:
             - run: |
                 pwd
