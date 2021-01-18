@@ -7,8 +7,14 @@ on:
 jobs:
     testing:
         runs-on: ubuntu-latest
-        container: it4smart/debian-stretch-cross:v1.1.0
+        container: 
+            image: it4smart/debian-stretch-cross:v1.1.0
+            volumes:
+                -  .:/data
         steps:
+            - run: |
+                pwd
+                ls -l
             - uses: actions/checkout@v2
             - run: |
                 pwd
