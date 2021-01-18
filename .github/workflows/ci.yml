@@ -7,8 +7,8 @@ on:
 jobs:
     testing:
         runs-on: ubuntu-latest
-        container: 
-            image: it4smart/debian-stretch-cross:v1.1.0
+        container: debian:stable
+#            image: it4smart/debian-stretch-cross:v1.1.0
         steps:
             - run: |
                 pwd
