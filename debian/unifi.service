@@ -5,11 +5,17 @@ Requires=docker.service
 
 [Service]
 TimeoutStartSec=0
+TimeoutStopSec=30
 Restart=always
+RestartSec=10
+
 ExecStartPre=-/usr/bin/docker stop unifi-rpi
 ExecStartPre=-/usr/bin/docker rm unifi-rpi
-ExecStartPre=/usr/bin/docker pull ryansch/unifi-rpi:5.12.35-arm32v7
-ExecStart=/usr/bin/docker run --name unifi-rpi --volume config:/var/lib/unifi --network host ryansch/unifi-rpi:5.12.35-arm32v7
+ExecStartPre=/usr/bin/docker pull ryansch/unifi-rpi:5.14.23
+
+ExecStart=/usr/bin/docker run --name unifi-rpi --volume config:/var/lib/unifi --network host ryansch/unifi-rpi:5.14.23
+
+ExecStop=/usr/bin/docker stop unifi-rpi
 
 [Install]
 Alias=unifi
