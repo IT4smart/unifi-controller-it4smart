@@ -2,7 +2,7 @@ version: 2
 jobs:
     build-debian-stretch-armhf:
         docker:
-            - image: it4smart/debian-stretch-cross:v1.1.0
+            - image: it4smart/debian-stretch-cross:v1.2.1
         working_directory: ~/repo
         steps:
             - checkout
@@ -27,7 +27,7 @@ jobs:
                 path: ~/
     build-debian-buster-armhf:
         docker:
-            - image: it4smart/debian-buster-cross:v1.1.0
+            - image: it4smart/debian-buster-cross:v1.2.1
         working_directory: ~/repo
         steps:
             - checkout
@@ -52,7 +52,7 @@ jobs:
                 path: ~/
     build-debian-stretch-armhf-snapshot:
         docker:
-            - image: it4smart/debian-stretch-cross:v1.1.0
+            - image: it4smart/debian-stretch-cross:v1.2.1
         working_directory: ~/repo
         steps:
             - checkout
@@ -61,7 +61,7 @@ jobs:
                 command: |
                     export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
                     export GIT_COMMIT=${CIRCLE_SHA1:0:7}
-                    wget https://codeload.github.com/IT4smart/unifi-controller-it4smart/zip/master -O unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz
+                    wget https://codeload.github.com/IT4smart/unifi-controller-it4smart/zip/${CIRCLE_BRANCH} -O unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz
             - run:
                 name: Create changelog
                 command: ./changelog.sh unifi-controller-it4smart stretch deb10 > debian/changelog
