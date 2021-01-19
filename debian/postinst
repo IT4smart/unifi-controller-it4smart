@@ -5,6 +5,7 @@ set -e
 
 case "$1" in
     configure)
+        systemctl daemon-reload
         systemctl start unifi.service
     ;;
 
