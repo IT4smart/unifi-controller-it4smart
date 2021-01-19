@@ -81,7 +81,7 @@ jobs:
                 name: Save build
                 command: |
                     mkdir -p ~/build
-                    mv ~/*.deb ~/build/
+                    mv ~/repo/*.deb ~/build/
             - store_artifacts:
                 path: ~/
             - persist_to_workspace:
