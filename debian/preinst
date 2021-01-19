@@ -1,1 +1,24 @@
-#!/bin/bash
+#!/bin/sh
+# preinst script for unifi-controller-it4smart
+
+set -e
+
+case "$1" in
+    install)
+        exit 0
+        ;;
+
+    upgrade|abort-upgrade)
+        systemctl stop unifi.service
+        ;;
+    
+    *)
+        echo "preinst called with unknown argument \'$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0

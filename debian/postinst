@@ -1,1 +1,24 @@
-#!/bin/bash
+#!/bin/sh
+# postinst script for unifi-controller-it4smart
+
+set -e
+
+case "$1" in
+    configure)
+        systemctl start unifi.service
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        exit 0
+    ;;
+
+    *)
+        echo "postinst called with unknoen argument \'$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0
