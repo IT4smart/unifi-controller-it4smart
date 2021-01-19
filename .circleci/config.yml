@@ -57,17 +57,26 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Download source
+                name: Create changelog
+                command: |
+                    CODENAME=$(lsb_release --codename --short)
+                    RELEASE=$(lsb_release --release --short)
+                    ./changelog.sh unifi-controller-it4smart ${CODENAME} deb${RELEASE} > debian/changelog
+            - run:
+                name: Create source archive
                 command: |
                     export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
                     export GIT_COMMIT=${CIRCLE_SHA1:0:7}
-                    wget https://codeload.github.com/IT4smart/unifi-controller-it4smart/zip/${CIRCLE_BRANCH} -O unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz
-            - run:
-                name: Create changelog
-                command: ./changelog.sh unifi-controller-it4smart stretch deb10 > debian/changelog
+                    mkdir -p ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}
+                    tar -czf /tmp/unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz .
+                    tar -xzf /tmp/unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz -C ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}        
             - run:
                 name: Build package
-                command: dpkg-buildpackage -us -uc --host-arch armhf
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    export GIT_COMMIT=${CIRCLE_SHA1:0:7}
+                    cd ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}
+                    dpkg-buildpackage -us -uc --host-arch armhf
             - run:
                 name: Save build
                 command: |
