@@ -88,6 +88,44 @@ jobs:
                 root: ~/
                 paths:
                     - build/*
+    build-debian-buster-armhf-snapshot:
+        docker:
+            - image: it4smart/debian-buster-cross:v1.2.1
+        working_directory: ~/repo
+        steps:
+            - checkout
+            - run:
+                name: Create changelog
+                command: |
+                    CODENAME=$(lsb_release --codename --short)
+                    RELEASE=$(lsb_release --release --short)
+                    ./changelog.sh unifi-controller-it4smart ${CODENAME} deb${RELEASE} > debian/changelog
+            - run:
+                name: Create source archive
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    export GIT_COMMIT=${CIRCLE_SHA1:0:7}
+                    mkdir -p ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}
+                    tar -czf /tmp/unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz .
+                    tar -xzf /tmp/unifi-controller-it4smart_${GIT_TAG//v}+git-${GIT_COMMIT}.orig.tar.gz -C ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}        
+            - run:
+                name: Build package
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    export GIT_COMMIT=${CIRCLE_SHA1:0:7}
+                    cd ~/repo/unifi-controller-it4smart-${GIT_TAG//v}+git-${GIT_COMMIT}
+                    dpkg-buildpackage -us -uc --host-arch armhf
+            - run:
+                name: Save build
+                command: |
+                    mkdir -p ~/build
+                    mv ~/repo/*.deb ~/build/
+            - store_artifacts:
+                path: ~/
+            - persist_to_workspace:
+                root: ~/
+                paths:
+                    - build/*
     test-debian-stretch-armhf-snapshot:
         machine: true
         working_directory: ~/repo
@@ -140,3 +178,4 @@ workflows:
     snapshot:
         jobs:
             - build-debian-stretch-armhf-snapshot
+            - build-debian-buster-armhf-snapshot
